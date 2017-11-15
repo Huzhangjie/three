@@ -7,6 +7,81 @@
   <title>Three.js 立方体</title>
 </head>
 <body>
-  
+  <canvas id="webglcanvas" width="500" height="500" style="background-color:#000;margin:0 auto; display:block;">
+
+  </canvas>
+  <script src="http://cdn.bootcss.com/three.js/r56/three.min.js"></script>
+  <script>
+    // 容器
+    // 3D电影
+    // camera 对象
+    let camera = null;
+    // 场景
+    let scene = null;
+    // 渲染器
+    let renderer = null;
+
+    let canvas = document.getElementById('webglcanvas');
+    renderer = new THREE.WebGLRenderer({
+      canvas: canvas,//渲染后放置到canvas中
+      antialias: true,//抗锯齿
+    });
+    renderer.setSize(canvas.width, canvas.height);
+    scene = new THREE.Scene();
+    // 透视相机 角度 宽高比例 拉近的远近 
+    camera = new THREE.PerspectiveCamera(45,canvas.width/canvas.height,1,4000);
+    scene.add(camera);
+    // 3D 世界的基础   camera scene renderer
+    // 立方体
+    // 数学形状
+    // 球体 贴上纹理 产生地球
+    // 数学形状 立方体
+    let geometry = new THREE.CubeGeometry(2,2,2);
+    // 添加纹理
+    let mapUrl = 'webgl-logo-256.jpg';//图片地址
+    // let map = THREE.ImageUtils.loadTextrue(mapUrl);//将图片转换为 一个 map 
+    let map = 
+      THREE.ImageUtils.loadTexture(mapUrl);
+
+    let material = new THREE.MeshPhongMaterial({ // 将map刻到立方体上 
+      map:map,
+    });
+    let cube = new THREE.Mesh(geometry,material);
+    cube.position.z = -7;
+    cube.rotation.x = Math.PI/5;
+    cube.rotation.y = Math.PI/5;
+
+    scene.add(cube);
+
+    var light = new THREE.DirectionalLight(0x00ff00, 1.5);
+    light.position.set(0,0,1);
+    scene.add(light);
+    
+    run();
+    function run () {
+      // 请求运动帧
+      requestAnimationFrame(function() {
+        run();
+      })
+      renderer.render(scene,camera);
+      animation();
+    }
+
+    var duration = 5000;
+    var currentTime = Date.now();
+    console.log(currentTime);
+    function animation() {
+      let now = Date.now();
+      let delatat = now - currentTime;
+      currentTime = now;
+      let fract = delatat/duration;
+      var angel = Math.PI*2*fract;
+      
+      cube.rotation.y += 0.03;
+      // cube.rotation.x += 0.08;
+      //  console.log(angel);
+    }
+
+  </script>
 </body>
 </html>
