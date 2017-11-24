@@ -30,7 +30,7 @@
     scene = new THREE.Scene();
     // 透视相机 角度 宽高比例 拉近的远近 
     camera = new THREE.PerspectiveCamera(45,canvas.width/canvas.height,1,4000);
-    scene.add(camera);
+    // scene.add(camera);  
     // 3D 世界的基础   camera scene renderer
     // 立方体
     // 数学形状
@@ -53,7 +53,7 @@
 
     scene.add(cube);
 
-    var light = new THREE.DirectionalLight(0x00ff00, 1.5);
+    var light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(0,0,1);
     scene.add(light);
     
@@ -69,7 +69,7 @@
 
     var duration = 5000;
     var currentTime = Date.now();
-    console.log(currentTime);
+    // console.log(currentTime);
     function animation() {
       let now = Date.now();
       let delatat = now - currentTime;
